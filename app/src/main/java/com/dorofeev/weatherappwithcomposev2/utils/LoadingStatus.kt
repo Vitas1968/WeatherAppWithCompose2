@@ -1,7 +1,9 @@
 package com.dorofeev.weatherappwithcomposev2.utils
 
+import com.dorofeev.weatherappwithcomposev2.data.WeatherData
+
 sealed class LoadingStatus{
-    data class Success<T>(val data: T? = null) : LoadingStatus()
-    data class Failure(val exception: Throwable) : LoadingStatus()
-    data class Loading<T>(val progress : T? = null) : LoadingStatus()
+    data class Success(val data: WeatherData? = WeatherData()) : LoadingStatus()
+    data class Failure(val exception: Throwable? = null) : LoadingStatus()
+    data class Loading(val progress : Boolean? = null) : LoadingStatus()
 }

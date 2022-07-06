@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Icon
@@ -43,7 +44,10 @@ import coil.compose.AsyncImage
 import com.dorofeev.weatherappwithcomposev2.DetailActivity
 import com.dorofeev.weatherappwithcomposev2.R
 import com.dorofeev.weatherappwithcomposev2.ui.theme.BlueLight
+import com.dorofeev.weatherappwithcomposev2.ui.theme.ErrorColor
 import com.dorofeev.weatherappwithcomposev2.utils.addHttpsToRequest
+import com.dorofeev.weatherappwithcomposev2.utils.convertToFailure
+import com.dorofeev.weatherappwithcomposev2.utils.convertToLoading
 import com.dorofeev.weatherappwithcomposev2.utils.convertToWeatherData
 import com.dorofeev.weatherappwithcomposev2.viewmodels.MainViewModel
 
@@ -53,28 +57,10 @@ fun MainScreen(viewModel: MainViewModel) {
 
     //храним состояние во вью модели
 
-    val mapWeatherState = viewModel.weatherStateFlow.collectAsState()
-    //val stateFromViewModel = remember{viewModel.stateWeatherScreen}
-    val stateWeather = remember{mapWeatherState}
+    val sourceState = viewModel.statusStateFlow.collectAsState()
+    val state = remember{sourceState}
     val context = LocalContext.current
 
-
-    // получаем данные в ливдате вьюмодели и тут преобразуем её в state
-    //val stateWithLiveDate = viewModel.weatherLiveDate.observeAsState(WeatherData()) as MutableState
-
-    //этот state сохраняет данные автоматически при смене ориентации экрана например
-     //val stateWeatherDataSaveable = rememberSaveable { mutableStateOf(WeatherData()) }
-
-    // тоже так можно,другая форма записи вот этого stateWeatherData = remember { mutableStateOf(WeatherData()) }
-    //но тут есть определенные тараканы
-    //val stateWeatherDataAuxiliary by remember { mutableStateOf(WeatherData()) }
-
-    // этот state не сохраняет данные автоматически при смене ориентации экрана например
-    // и при вовороте экрана мы увидим дефолтные значения дата класса
-    //val stateWeatherData = remember { mutableStateOf(WeatherData()) }
-
-
-    // viewModel.updateWeatherData2("Krasnoyarsk", stateWeatherData)
 
     Scaffold(
         floatingActionButtonPosition = FabPosition.End,
@@ -83,7 +69,7 @@ fun MainScreen(viewModel: MainViewModel) {
                 text = {Text(text = "To detail")},
                 onClick = {
                     val detailIntent = Intent(context, DetailActivity::class.java).apply {
-                        putExtra("detailData",stateWeather.convertToWeatherData())
+                        putExtra("detailData",state.convertToWeatherData())
                     }
                     context.startActivity(detailIntent)
                     Log.d("MyTag", "FAB clicked" ) },
@@ -101,6 +87,10 @@ fun MainScreen(viewModel: MainViewModel) {
                 .alpha(0.5f),
             contentScale = ContentScale.FillBounds
         )
+
+        state.convertToLoading()?.let {
+            if (it) ShowProgressbar()
+        }
 
 
         Column(
@@ -126,7 +116,7 @@ fun MainScreen(viewModel: MainViewModel) {
                     ) {
 
 
-                            stateWeather.convertToWeatherData()?.dateTime?.let { it1 ->
+                        state.convertToWeatherData()?.dateTime?.let { it1 ->
                                 Text(
                                     modifier = Modifier.padding(start = 6.dp),
                                     text = it1,//"20 Jun 2022 13:00",
@@ -139,7 +129,7 @@ fun MainScreen(viewModel: MainViewModel) {
 
 
                         AsyncImage(
-                            model = stateWeather.convertToWeatherData()?.iconUrl?.addHttpsToRequest(),
+                            model = state.convertToWeatherData()?.iconUrl?.addHttpsToRequest(),
                           //  model = stateFromViewModel.value.iconUrl,//"https://cdn.weatherapi.com/weather/64x64/day/116.png",
                             contentDescription = stringResource(id = R.string.icon_weather_description),
                             modifier = Modifier
@@ -150,29 +140,37 @@ fun MainScreen(viewModel: MainViewModel) {
 
                     Text(
                         modifier = Modifier.padding(bottom = 8.dp),
-                        text = "City: ${stateWeather.convertToWeatherData()?.city}",//"20 Jun 2022 13:00",
+                        text = "City: ${state.convertToWeatherData()?.city}",//"20 Jun 2022 13:00",
                         style = TextStyle(fontSize = 22.sp),
                         color = Color.White
                     )
                     Text(
                         modifier = Modifier.padding(start = 6.dp),
-                        text = "Temp: ${stateWeather.convertToWeatherData()?.temp} C",//"20 Jun 2022 13:00",
+                        text = "Temp: ${state.convertToWeatherData()?.temp} C",//"20 Jun 2022 13:00",
                         style = TextStyle(fontSize = 22.sp),
                         color = Color.White
                     )
 
                     Text(
                         modifier = Modifier.padding(bottom = 8.dp),
-                        text = "Wind: speed ${stateWeather.convertToWeatherData()?.windSpeed} km/h, dir: ${stateWeather.convertToWeatherData()?.windDir}",
+                        text = "Wind: speed ${state.convertToWeatherData()?.windSpeed} km/h, dir: ${state.convertToWeatherData()?.windDir}",
                         style = TextStyle(fontSize = 16.sp),
                         color = Color.White
                     )
                     Text(
                         modifier = Modifier.padding(bottom = 8.dp),
-                        text = "Humidity: ${stateWeather.convertToWeatherData()?.humidity} %",
+                        text = "Humidity: ${state.convertToWeatherData()?.humidity} %",
                         style = TextStyle(fontSize = 16.sp),
                         color = Color.White
                     )
+                    state.convertToFailure()?.let {
+                        Text(
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            text = "Error : ${state.convertToFailure()?.message}",
+                            style = TextStyle(fontSize = 16.sp),
+                            color = ErrorColor
+                        )
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(10.dp))
@@ -210,6 +208,11 @@ fun ListButtonCity(
         }
 
     }
+}
+
+@Composable
+fun ShowProgressbar(){
+    CircularProgressIndicator(modifier = Modifier.padding(start = 170.dp,top = 10.dp))
 }
 
 

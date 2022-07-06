@@ -15,10 +15,6 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    //private val providerWeatherData = ProviderWeatherData(this)
-    //private val weatherInteractor = WeatherInteractor(providerWeatherData)
-   // private val factory = MainViewModelFactory(weatherInteractor)
-   // private val viewModel: MainViewModel by viewModels { factory }
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +36,5 @@ class MainActivity : ComponentActivity() {
     private fun injectComponent() {
         (applicationContext as WeatherApp).component.inject(this)
     }
-
 }
 

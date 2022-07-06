@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class WeatherData(
     var temp: String? = "no temp" ,
     var dateTime: String? = "no DateTime",
-    var iconUrl: String? ="https://cdn.weatherapi.com/weather/64x64/night/116.png",
+    var iconUrl: String? ="//cdn.weatherapi.com/weather/64x64/night/116.png",
     var city: String? = "no city",
     var windSpeed: String? = "no speed",
     var windDir: String? = "no dir",

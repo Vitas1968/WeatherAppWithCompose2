@@ -1,9 +1,5 @@
 package com.dorofeev.weatherappwithcomposev2.viewmodels
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dorofeev.weatherappwithcomposev2.data.WeatherData
@@ -13,6 +9,7 @@ import com.dorofeev.weatherappwithcomposev2.utils.LoadingStatus
 import com.dorofeev.weatherappwithcomposev2.utils.createDefaultExceptionHandlerNew
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -26,45 +23,24 @@ class MainViewModel @Inject constructor(
     private var weatherJob: Job? = null
     private val dispatcherIO = Dispatchers.IO
 
-    private val weatherDataStateFlow: MutableStateFlow<LoadingStatus> =
-        MutableStateFlow(LoadingStatus.Success<WeatherData>(WeatherData()))
+    private val _statusStateFlow: MutableStateFlow<LoadingStatus> =
+        MutableStateFlow(LoadingStatus.Success(WeatherData()))
 
-    val weatherStateFlow: StateFlow<LoadingStatus> = weatherDataStateFlow
+    val statusStateFlow: StateFlow<LoadingStatus> = _statusStateFlow
 
-    val stateWeatherScreen: MutableState<WeatherData> = mutableStateOf(WeatherData())
-
-    //private val weatherLiveDate_ = MutableLiveData<WeatherData>()
-    var weatherLiveDate: LiveData<WeatherData> = MutableLiveData()
     private val coroutineContext: CoroutineContext =
-        dispatcherIO + createDefaultExceptionHandlerNew(weatherDataStateFlow)
+        dispatcherIO + createDefaultExceptionHandlerNew(_statusStateFlow)
 
-    /*
-        fun updateWeatherData(city: String, stateMapOfWeather: WeatherData) {
-            weatherInteractor.requestWeatherData(city, stateMapOfWeather)
-            //getWeatherLiveDate().observeAsState()
-        }
-
-        fun updateWeatherData2(city: String, stateMapOfWeather: MutableState<WeatherData>) {
-            weatherInteractor.requestWeatherData2(city, stateMapOfWeather)
-        }
-
-         fun updateWeatherData3(city: String) {
-             weatherLiveDate = weatherInteractor.requestWeatherData3(city)
-         }
-
-        fun updateWeatherData4(city: String) {
-            weatherInteractor.requestWeatherData3(city).observeForever {
-                stateWeatherScreen.value = it
-            }
-        }
-    */
     fun getWeather(city: String) {
         if (weatherJob?.isActive == true) return
+        _statusStateFlow.value = LoadingStatus.Loading(true)
         weatherJob = viewModelScope.launch(coroutineContext) {
             (weatherInteractor as WeatherInteractor)
                 .getWeather(city)
                 ?.let { weatherData ->
-                    weatherDataStateFlow.value = LoadingStatus.Success(weatherData)
+                    delay(1000)
+                    _statusStateFlow.value = LoadingStatus.Loading(false)
+                    _statusStateFlow.value = LoadingStatus.Success(weatherData)
                 }
         }
     }

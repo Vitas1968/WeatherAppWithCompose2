@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import com.dorofeev.weatherappwithcomposev2.data.WeatherData
-import com.dorofeev.weatherappwithcomposev2.factories.DetailViewModelFactory
 import com.dorofeev.weatherappwithcomposev2.factories.ViewModelFactory
 import com.dorofeev.weatherappwithcomposev2.screens.DetailScreen
 import com.dorofeev.weatherappwithcomposev2.ui.theme.WeatherAppWithComposeV2Theme
@@ -27,10 +26,8 @@ class DetailActivity : ComponentActivity() {
         val weatherData = intent.extras?.getParcelable<WeatherData>("detailData")
         weatherData?.let {
             viewModel.updWeather = it
-            //viewModel.updateWeather(it)
-           // viewModel = ViewModelProvider(this, createViewModelFactory(it)).get(DetailViewModel::class.java)
         }
-        val fgh = ""
+
 
         setContent {
             WeatherAppWithComposeV2Theme {
@@ -49,7 +46,5 @@ class DetailActivity : ComponentActivity() {
     private fun injectComponent() {
         (applicationContext as WeatherApp).component.inject(this)
     }
-
-    private fun createViewModelFactory(weatherData: WeatherData) = DetailViewModelFactory(weatherData)
 }
 

@@ -17,8 +17,4 @@ class DetailViewModel @Inject constructor():ViewModel() {
             stateWeatherScreen.value = value
             field = value
         }
-
-    fun updateWeather(weatherData: WeatherData){
-        stateWeatherScreen.value = weatherData
-    }
 }
