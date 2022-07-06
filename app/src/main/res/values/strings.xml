@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WeatherAppWithComposeV2</string>
+    <string name="main_background_description">clouds</string>
+    <string name="icon_weather_description">icon weather</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="base_url">https://api.weatherapi.com/v1/</string>
+    <string name="retrofit_gson_date_format">dd-MM-yyyy\'T\'HH:mm:ss</string>
+</resources>
