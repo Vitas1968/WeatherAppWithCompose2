@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="cities">
-        <item>Lodnof(вызывает ошибку)</item>
+        <item>Lodnof(exeption!!)</item>
         <item>Paris</item>
         <item>Madrid</item>
         <item>Moscow</item>
