@@ -7,7 +7,5 @@ import com.dorofeev.weatherappwithcomposev2.utils.Constants.DEFAULT_MDFR_SHOW_PR
 
 @Composable
 fun ShowProgressbar(modifier: Modifier? = null) {
-    val mdfr =  modifier?.let {it} ?: DEFAULT_MDFR_SHOW_PRGRS_BAR
-    CircularProgressIndicator(modifier = mdfr)
-
+    CircularProgressIndicator(modifier = modifier ?: DEFAULT_MDFR_SHOW_PRGRS_BAR)
 }

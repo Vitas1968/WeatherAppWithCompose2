@@ -2,7 +2,6 @@ package com.dorofeev.weatherappwithcomposev2.screens.main_screen
 
 import android.content.Intent
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,24 +21,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.dorofeev.weatherappwithcomposev2.DetailActivity
-import com.dorofeev.weatherappwithcomposev2.R.drawable
 import com.dorofeev.weatherappwithcomposev2.R.string
 import com.dorofeev.weatherappwithcomposev2.data.LoadingStatus
 import com.dorofeev.weatherappwithcomposev2.ui.theme.BlueLight
-import com.dorofeev.weatherappwithcomposev2.ui.theme.ErrorColor
 import com.dorofeev.weatherappwithcomposev2.utils.addHttpsToRequest
-import com.dorofeev.weatherappwithcomposev2.utils.convertToFailure
 import com.dorofeev.weatherappwithcomposev2.utils.convertToLoading
 import com.dorofeev.weatherappwithcomposev2.utils.convertToWeatherData
 import com.dorofeev.weatherappwithcomposev2.viewmodels.MainViewModel
@@ -68,14 +61,7 @@ import com.dorofeev.weatherappwithcomposev2.viewmodels.MainViewModel
             )
         }
     ) {
-        Image(
-            painter = painterResource(id = drawable.main_background_img),
-            contentDescription = stringResource(id = string.main_background_description),
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.5f),
-            contentScale = ContentScale.FillBounds
-        )
+        BackgroundMainScreen()
 
         state.convertToLoading()?.let {
             if (it) ShowProgressbar()
@@ -121,39 +107,27 @@ import com.dorofeev.weatherappwithcomposev2.viewmodels.MainViewModel
                         )
                     }
 
-                    Text(
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        text = "City: ${state.convertToWeatherData()?.city}",//"20 Jun 2022 13:00",
-                        style = TextStyle(fontSize = 22.sp),
-                        color = Color.White
-                    )
-                    Text(
-                        modifier = Modifier.padding(start = 6.dp),
-                        text = "Temp: ${state.convertToWeatherData()?.temp} C",//"20 Jun 2022 13:00",
-                        style = TextStyle(fontSize = 22.sp),
-                        color = Color.White
-                    )
-
-                    Text(
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        text = "Wind: speed ${state.convertToWeatherData()?.windSpeed} km/h, dir: ${state.convertToWeatherData()?.windDir}",
-                        style = TextStyle(fontSize = 16.sp),
-                        color = Color.White
-                    )
-                    Text(
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        text = "Humidity: ${state.convertToWeatherData()?.humidity} %",
-                        style = TextStyle(fontSize = 16.sp),
-                        color = Color.White
-                    )
-                    state.convertToFailure()?.let {
-                        Text(
-                            modifier = Modifier.padding(bottom = 8.dp),
-                            text = "Error : ${state.convertToFailure()?.message}",
-                            style = TextStyle(fontSize = 16.sp),
-                            color = ErrorColor
-                        )
-                    }
+                    TextItemWeatherDataMainScreen(state)
+//                    Text(
+//                        modifier = Modifier.padding(start = 6.dp),
+//                        text = "Temp: ${state.convertToWeatherData()?.temp} C",//"20 Jun 2022 13:00",
+//                        style = TextStyle(fontSize = 22.sp),
+//                        color = Color.White
+//                    )
+//
+//                    Text(
+//                        modifier = Modifier.padding(bottom = 8.dp),
+//                        text = "Wind: speed ${state.convertToWeatherData()?.windSpeed} km/h, dir: ${state.convertToWeatherData()?.windDir}",
+//                        style = TextStyle(fontSize = 16.sp),
+//                        color = Color.White
+//                    )
+//                    Text(
+//                        modifier = Modifier.padding(bottom = 8.dp),
+//                        text = "Humidity: ${state.convertToWeatherData()?.humidity} %",
+//                        style = TextStyle(fontSize = 16.sp),
+//                        color = Color.White
+//                    )
+                    FailureTextItem(state)
                 }
             }
             Spacer(modifier = Modifier.height(10.dp))
@@ -161,3 +135,5 @@ import com.dorofeev.weatherappwithcomposev2.viewmodels.MainViewModel
         }
     }
 }
+
+
