@@ -20,11 +20,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.FabPosition
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons.Filled
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -51,29 +48,26 @@ import com.dorofeev.weatherappwithcomposev2.utils.convertToLoading
 import com.dorofeev.weatherappwithcomposev2.utils.convertToWeatherData
 import com.dorofeev.weatherappwithcomposev2.viewmodels.MainViewModel
 
-//@Preview(showBackground = true)
 @Composable
 fun MainScreen(viewModel: MainViewModel) {
 
-    //храним состояние во вью модели
-
     val sourceState = viewModel.statusStateFlow.collectAsState()
-    val state = remember{sourceState}
+    val state = remember { sourceState }
     val context = LocalContext.current
-
 
     Scaffold(
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                text = {Text(text = "To detail")},
+                text = { Text(text = "To detail") },
                 onClick = {
                     val detailIntent = Intent(context, DetailActivity::class.java).apply {
-                        putExtra("detailData",state.convertToWeatherData())
+                        putExtra("detailData", state.convertToWeatherData())
                     }
                     context.startActivity(detailIntent)
-                    Log.d("MyTag", "FAB clicked" ) },
-                icon = {Icon(Filled.Add, contentDescription = "Добавить")},
+                    Log.d("MyTag", "FAB clicked")
+                },
+               // icon = { Icon(Filled.Add, contentDescription = "Добавить") },
                 backgroundColor = Color.Green,
                 contentColor = Color.White
             )
@@ -91,7 +85,6 @@ fun MainScreen(viewModel: MainViewModel) {
         state.convertToLoading()?.let {
             if (it) ShowProgressbar()
         }
-
 
         Column(
             modifier = Modifier
@@ -115,22 +108,17 @@ fun MainScreen(viewModel: MainViewModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
-
                         state.convertToWeatherData()?.dateTime?.let { it1 ->
-                                Text(
-                                    modifier = Modifier.padding(start = 6.dp),
-                                    text = it1,//"20 Jun 2022 13:00",
-                                    style = TextStyle(fontSize = 16.sp),
-                                    color = Color.White
-                                )
-                            }
-
-
-
+                            Text(
+                                modifier = Modifier.padding(start = 6.dp),
+                                text = it1,//"20 Jun 2022 13:00",
+                                style = TextStyle(fontSize = 16.sp),
+                                color = Color.White
+                            )
+                        }
 
                         AsyncImage(
                             model = state.convertToWeatherData()?.iconUrl?.addHttpsToRequest(),
-                          //  model = stateFromViewModel.value.iconUrl,//"https://cdn.weatherapi.com/weather/64x64/day/116.png",
                             contentDescription = stringResource(id = R.string.icon_weather_description),
                             modifier = Modifier
                                 .size(40.dp)
@@ -175,7 +163,6 @@ fun MainScreen(viewModel: MainViewModel) {
             }
             Spacer(modifier = Modifier.height(10.dp))
             ListButtonCity(viewModel)
-
         }
     }
 }
@@ -184,10 +171,6 @@ fun MainScreen(viewModel: MainViewModel) {
 fun ListButtonCity(
     viewModel: MainViewModel
 ) {
-    //как получить котекст внутри Composable фунции
-    val context = LocalContext.current
-
-
     val cities = stringArrayResource(id = R.array.cities).toList()
     Column(
         modifier = Modifier
@@ -211,8 +194,8 @@ fun ListButtonCity(
 }
 
 @Composable
-fun ShowProgressbar(){
-    CircularProgressIndicator(modifier = Modifier.padding(start = 170.dp,top = 10.dp))
+fun ShowProgressbar() {
+    CircularProgressIndicator(modifier = Modifier.padding(start = 170.dp, top = 10.dp))
 }
 
 
