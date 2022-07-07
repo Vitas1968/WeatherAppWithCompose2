@@ -1,6 +1,7 @@
 package com.dorofeev.weatherappwithcomposev2.utils
 
 import androidx.compose.runtime.State
+import com.dorofeev.weatherappwithcomposev2.data.LoadingStatus
 import com.dorofeev.weatherappwithcomposev2.data.WeatherData
 
 fun State<LoadingStatus>.convertToWeatherData() =

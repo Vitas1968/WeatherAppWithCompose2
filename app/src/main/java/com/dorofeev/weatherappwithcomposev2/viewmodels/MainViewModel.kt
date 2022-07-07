@@ -2,10 +2,10 @@ package com.dorofeev.weatherappwithcomposev2.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dorofeev.weatherappwithcomposev2.data.LoadingStatus
 import com.dorofeev.weatherappwithcomposev2.data.WeatherData
 import com.dorofeev.weatherappwithcomposev2.rest.interactors.IWeatherInteractor
 import com.dorofeev.weatherappwithcomposev2.rest.interactors.WeatherInteractor
-import com.dorofeev.weatherappwithcomposev2.utils.LoadingStatus
 import com.dorofeev.weatherappwithcomposev2.utils.createDefaultExceptionHandlerNew
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

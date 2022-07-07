@@ -1,6 +1,4 @@
-package com.dorofeev.weatherappwithcomposev2.utils
-
-import com.dorofeev.weatherappwithcomposev2.data.WeatherData
+package com.dorofeev.weatherappwithcomposev2.data
 
 sealed class LoadingStatus{
     data class Success(val data: WeatherData? = WeatherData()) : LoadingStatus()

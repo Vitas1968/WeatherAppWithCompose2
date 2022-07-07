@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         injectComponent()
         getDependencyViewModel()
-        setContent {
+        setContent{
             WeatherAppWithComposeV2Theme {
                 MainScreen(viewModel)
             }

@@ -3,6 +3,7 @@ package com.dorofeev.weatherappwithcomposev2.utils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import com.dorofeev.weatherappwithcomposev2.data.LoadingStatus
 import com.dorofeev.weatherappwithcomposev2.factories.ViewModelFactory
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
