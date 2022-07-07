@@ -26,13 +26,7 @@ fun TextItemWeatherDataMainScreen(state: State<LoadingStatus>) {
             "Humidity" to this?.humidity
         )
     }
-    val weatherParamsMap1 = mapOf<String, String?>(
-        "City" to state.convertToWeatherData()?.city,
-        "Temp" to state.convertToWeatherData()?.temp,
-        "winds" to state.convertToWeatherData()?.windSpeed,
-        "windd" to state.convertToWeatherData()?.windDir,
-        "Humidity" to state.convertToWeatherData()?.humidity
-    )
+
     weatherParamsList.forEach { params ->
         val textLocal = if (
             params.contains(
@@ -48,15 +42,5 @@ fun TextItemWeatherDataMainScreen(state: State<LoadingStatus>) {
             color = Color.White
         )
     }
-
-/*
-    Text(
-        modifier = Modifier.padding(bottom = 8.dp),
-        text = "City: ${state.convertToWeatherData()?.city}",//"20 Jun 2022 13:00",
-        style = TextStyle(fontSize = 22.sp),
-        color = Color.White
-    )
-
- */
 }
 
