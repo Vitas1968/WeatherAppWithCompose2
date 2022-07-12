@@ -11,7 +11,7 @@ class WeatherRepository @Inject constructor(
 
     suspend fun getWeather(city: String): WeatherDTOClass? {
         val response = apiService.getWeatherAsync(city = city).await()
-        checkResultSuccessOrThrowExceptions(response.code())
-        return response.body()
+        checkResultSuccessOrThrowExceptions(response)
+        return response.body() as WeatherDTOClass?
     }
 }

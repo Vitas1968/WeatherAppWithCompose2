@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.dorofeev.weatherappwithcomposev2.factories.ViewModelFactory
 import com.dorofeev.weatherappwithcomposev2.viewmodels.DetailViewModel
 import com.dorofeev.weatherappwithcomposev2.viewmodels.MainViewModel
+import com.dorofeev.weatherappwithcomposev2.viewmodels.ShowWeatherViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -25,6 +26,13 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(DetailViewModel::class)
     fun bindDetailViewModel(viewModel: DetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ShowWeatherViewModel::class)
+    fun bindDetailViewModel(viewModel: ShowWeatherViewModel): ViewModel
+
+
 }
 
 @Target(

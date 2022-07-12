@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherAppWithComposeV2">
         <activity
+            android:name=".ShowWeatherActivity"
+            android:exported="true"
+            android:label="@string/title_activity_show_weather"
+            android:theme="@style/Theme.WeatherAppWithComposeV2.NoActionBar" />
+        <activity
             android:name=".DetailActivity"
             android:exported="true"
             android:label="@string/title_activity_detail"

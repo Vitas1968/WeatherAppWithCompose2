@@ -6,9 +6,10 @@ data class WeatherDTOClass(
     @SerializedName("current") val current: Current? = null,
     @SerializedName("location") val location: Location? = null
 ) {
+
     data class Current(
         @SerializedName("cloud") val cloud: Int? = null, // 50
-        @SerializedName("condition")val condition: Condition? = null,
+        @SerializedName("condition") val condition: Condition? = null,
         @SerializedName("feelslike_c") val feelslike_c: Double? = null, // 19.0
         @SerializedName("feelslike_f") val feelslike_f: Double? = null, // 66.2
         @SerializedName("gust_kph") val gust_kph: Double? = null, // 2.9
@@ -31,6 +32,7 @@ data class WeatherDTOClass(
         @SerializedName("wind_kph") val wind_kph: Double? = null, // 3.6
         @SerializedName("wind_mph") val wind_mph: Double? = null // 2.2
     ) {
+
         data class Condition(
             @SerializedName("code") val code: Int? = null, // 1003
             @SerializedName("icon") val icon: String? = null, // //cdn.weatherapi.com/weather/64x64/day/116.png

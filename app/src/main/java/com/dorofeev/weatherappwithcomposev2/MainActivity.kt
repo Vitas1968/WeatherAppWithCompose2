@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.dorofeev.weatherappwithcomposev2.factories.ViewModelFactory
-import com.dorofeev.weatherappwithcomposev2.screens.MainScreen
+import com.dorofeev.weatherappwithcomposev2.rest.errors.getViewModel
+import com.dorofeev.weatherappwithcomposev2.screens.main_screen.MainScreen
 import com.dorofeev.weatherappwithcomposev2.ui.theme.WeatherAppWithComposeV2Theme
-import com.dorofeev.weatherappwithcomposev2.utils.getViewModel
 import com.dorofeev.weatherappwithcomposev2.viewmodels.MainViewModel
 import javax.inject.Inject
 

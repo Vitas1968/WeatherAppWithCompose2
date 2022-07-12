@@ -1,4 +1,4 @@
-package com.dorofeev.weatherappwithcomposev2.utils
+package com.dorofeev.weatherappwithcomposev2.rest.errors
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

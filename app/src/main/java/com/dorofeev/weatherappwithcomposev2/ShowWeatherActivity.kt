@@ -3,44 +3,38 @@ package com.dorofeev.weatherappwithcomposev2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import com.dorofeev.weatherappwithcomposev2.data.WeatherData
 import com.dorofeev.weatherappwithcomposev2.factories.ViewModelFactory
 import com.dorofeev.weatherappwithcomposev2.rest.errors.getViewModel
-import com.dorofeev.weatherappwithcomposev2.screens.DetailScreen
+import com.dorofeev.weatherappwithcomposev2.screens.show_weather.ShowWeather
 import com.dorofeev.weatherappwithcomposev2.ui.theme.WeatherAppWithComposeV2Theme
-import com.dorofeev.weatherappwithcomposev2.viewmodels.DetailViewModel
+import com.dorofeev.weatherappwithcomposev2.viewmodels.ShowWeatherViewModel
 import javax.inject.Inject
 
-class DetailActivity : ComponentActivity() {
+class ShowWeatherActivity : ComponentActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var viewModel: DetailViewModel
+
+    private lateinit var viewModel: ShowWeatherViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectComponent()
         getDependencyViewModel()
-        val weatherData = intent.extras?.getParcelable<WeatherData>("detailData")
+        val weatherData = intent.extras?.getString("city")
         weatherData?.let {
-            viewModel.updWeather = it
+            viewModel.city = it
         }
-
-
         setContent {
             WeatherAppWithComposeV2Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    DetailScreen(viewModel)
-                }
+                ShowWeather(viewModel)
             }
         }
-    }
 
+    }
     private fun getDependencyViewModel() {
-        viewModel = getViewModel(this, viewModelFactory, DetailViewModel::class.java)
+        viewModel =
+            getViewModel(this, viewModelFactory, ShowWeatherViewModel::class.java)
     }
 
     private fun injectComponent() {

@@ -1,4 +1,4 @@
-package com.dorofeev.weatherappwithcomposev2.screens.main_screen
+package com.dorofeev.weatherappwithcomposev2.screens.show_weather
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,6 +19,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.dorofeev.weatherappwithcomposev2.R.string
 import com.dorofeev.weatherappwithcomposev2.data.LoadingStatus
+import com.dorofeev.weatherappwithcomposev2.screens.main_screen.FailureTextItem
+import com.dorofeev.weatherappwithcomposev2.screens.main_screen.TextItemWeatherDataMainScreen
 import com.dorofeev.weatherappwithcomposev2.utils.addHttpsToRequest
 import com.dorofeev.weatherappwithcomposev2.utils.convertToWeatherData
 

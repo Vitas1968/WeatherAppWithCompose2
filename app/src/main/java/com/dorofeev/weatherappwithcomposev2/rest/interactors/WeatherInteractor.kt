@@ -16,7 +16,7 @@ class WeatherInteractor @Inject constructor (
 return convertToWeatherData(dtoObject)
     }
 
-    private fun convertToWeatherData(dtoClass:WeatherDTOClass?) =
+    private fun convertToWeatherData1(dtoClass:WeatherDTOClass?) =
         with(dtoClass){
             WeatherData(
                 temp = this?.current?.temp_c.toString(),
@@ -26,6 +26,19 @@ return convertToWeatherData(dtoObject)
                 windSpeed = this?.current?.wind_kph.toString(),
                 windDir = this?.current?.wind_dir,
                 humidity = this?.current?.humidity.toString()
+            )
+        }
+
+    private fun convertToWeatherData(dtoClass:WeatherDTOClass?) =
+        dtoClass?.run{
+            WeatherData(
+                temp = current?.temp_c.toString(),
+                dateTime =  location?.localtime,
+                iconUrl = current?.condition?.icon,
+                city = location?.name,
+                windSpeed = current?.wind_kph.toString(),
+                windDir = current?.wind_dir,
+                humidity = current?.humidity.toString()
             )
         }
 }

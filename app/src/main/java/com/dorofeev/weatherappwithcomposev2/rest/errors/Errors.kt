@@ -1,4 +1,4 @@
-package com.dorofeev.weatherappwithcomposev2.utils
+package com.dorofeev.weatherappwithcomposev2.rest.errors
 
 object Errors {
     const val BAD_REQUEST = "Упс...Что то пошло не так"
