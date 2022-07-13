@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="main_weather_param">
-        <item>City</item>
-        <item>Temp</item>
-        <item>Wind</item>
-        <item>Humidity</item>
-    </string-array>
-</resources>

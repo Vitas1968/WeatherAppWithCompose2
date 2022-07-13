@@ -7,4 +7,6 @@
     <string name="base_url">https://api.weatherapi.com/v1/</string>
     <string name="retrofit_gson_date_format">dd-MM-yyyy\'T\'HH:mm:ss</string>
     <string name="title_activity_show_weather">ShowWeatherActivity</string>
+    <string name="show_detail">Show detail</string>
+    <string name="hide_detail">Hide detail</string>
 </resources>

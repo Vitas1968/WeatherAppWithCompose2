@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,13 +20,15 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.dorofeev.weatherappwithcomposev2.R.string
 import com.dorofeev.weatherappwithcomposev2.data.LoadingStatus
-import com.dorofeev.weatherappwithcomposev2.screens.main_screen.FailureTextItem
-import com.dorofeev.weatherappwithcomposev2.screens.main_screen.TextItemWeatherDataMainScreen
+import com.dorofeev.weatherappwithcomposev2.screens.main.FailureTextItem
 import com.dorofeev.weatherappwithcomposev2.utils.addHttpsToRequest
 import com.dorofeev.weatherappwithcomposev2.utils.convertToWeatherData
 
 @Composable
-fun ContentCardMainScreen(state: State<LoadingStatus>) {
+fun ContentCardMainScreen(
+    state: State<LoadingStatus>,
+    isShowDetailState: MutableState<Boolean>
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -53,7 +56,7 @@ fun ContentCardMainScreen(state: State<LoadingStatus>) {
                     .padding(end = 6.dp)
             )
         }
-        TextItemWeatherDataMainScreen(state)
+        TextItemWeatherDataMainScreen(state, isShowDetailState)
         FailureTextItem(state)
     }
 }

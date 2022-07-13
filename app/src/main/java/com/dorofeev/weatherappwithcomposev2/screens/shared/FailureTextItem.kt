@@ -1,4 +1,4 @@
-package com.dorofeev.weatherappwithcomposev2.screens.main_screen
+package com.dorofeev.weatherappwithcomposev2.screens.main
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text

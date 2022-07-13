@@ -1,4 +1,4 @@
-package com.dorofeev.weatherappwithcomposev2.screens.main_screen
+package com.dorofeev.weatherappwithcomposev2.screens.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +10,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -26,12 +26,9 @@ import com.dorofeev.weatherappwithcomposev2.R.string
 //@Preview(widthDp = 400, heightDp = 700)
 @Composable
 fun InputCityItem(
-   // stateErrorCityField: MutableState<Boolean>,
-   // mutableStatusCityFieldFlow : MutableStateFlow<String>,
-    cityFieldState : State<StatusEnterCityField>
-){
-
-// val vm = viewModel(DetailViewModel::class.java)
+    cityState: MutableState<String>,
+    errorState: MutableState<Boolean>
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -39,23 +36,20 @@ fun InputCityItem(
             .alpha(0.5f),
     ) {
         OutlinedTextField(
-            value = cityFieldState.value ,
+            value = cityState.value,
             onValueChange = { enterValue ->
-                (cityFieldState.value as StatusEnterCityField.EnterCity).city = enterValue
+                cityState.value = enterValue
+
             },
-            //isError = stateErrorCityField.value,
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             textStyle = TextStyle(fontSize = 19.sp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor= Color.Green, // цвет при получении фокуса
+                focusedBorderColor = Color.Green, // цвет рамки при получении фокуса
                 unfocusedBorderColor = Color.Yellow,
                 textColor = Color.Black
             ),
-            label = { Text(text = "City name")},
-            trailingIcon = {
-               if (stateErrorCityField.value) setErrorImage()
-            }
+            label = { Text(text = "City name") },
+            trailingIcon = { if (errorState.value) setErrorImage() }
         )
 
     }

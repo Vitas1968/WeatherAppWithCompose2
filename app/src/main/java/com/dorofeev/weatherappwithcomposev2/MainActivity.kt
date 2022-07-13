@@ -3,38 +3,18 @@ package com.dorofeev.weatherappwithcomposev2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.dorofeev.weatherappwithcomposev2.factories.ViewModelFactory
-import com.dorofeev.weatherappwithcomposev2.rest.errors.getViewModel
-import com.dorofeev.weatherappwithcomposev2.screens.main_screen.MainScreen
+import com.dorofeev.weatherappwithcomposev2.screens.main.StartPageMainScreen
 import com.dorofeev.weatherappwithcomposev2.ui.theme.WeatherAppWithComposeV2Theme
-import com.dorofeev.weatherappwithcomposev2.viewmodels.MainViewModel
-import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private lateinit var viewModel: MainViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injectComponent()
-        getDependencyViewModel()
-        setContent{
+        setContent {
             WeatherAppWithComposeV2Theme {
-                MainScreen(viewModel)
+                StartPageMainScreen()
             }
         }
-    }
-
-    private fun getDependencyViewModel() {
-        viewModel =
-            getViewModel(this, viewModelFactory, MainViewModel::class.java)
-    }
-
-    private fun injectComponent() {
-        (applicationContext as WeatherApp).component.inject(this)
     }
 }
 

@@ -1,8 +1,10 @@
 package com.dorofeev.weatherappwithcomposev2.viewmodels
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dorofeev.weatherappwithcomposev2.data.LoadingStatus
+import com.dorofeev.weatherappwithcomposev2.data.LoadingStatus.Loading
 import com.dorofeev.weatherappwithcomposev2.data.LoadingStatus.Success
 import com.dorofeev.weatherappwithcomposev2.rest.errors.createDefaultExceptionHandlerNew
 import com.dorofeev.weatherappwithcomposev2.rest.interactors.IWeatherInteractor
@@ -26,6 +28,7 @@ class ShowWeatherViewModel@Inject constructor(
 
     private val _statusStateFlow: MutableStateFlow<LoadingStatus> =
         MutableStateFlow(Success())
+    val isShowDetailState = mutableStateOf(false)
 
 
     val statusStateFlow: StateFlow<LoadingStatus> = _statusStateFlow
@@ -35,14 +38,14 @@ class ShowWeatherViewModel@Inject constructor(
 
     fun getWeather(city: String) {
         if (weatherJob?.isActive == true) return
-        _statusStateFlow.value = LoadingStatus.Loading(true)
+        _statusStateFlow.value = Loading(true)
         weatherJob = viewModelScope.launch(coroutineContext) {
             (weatherInteractor as WeatherInteractor)
                 .getWeather(city)
                 ?.let { weatherData ->
                     delay(1000)
-                    _statusStateFlow.value = LoadingStatus.Loading(false)
-                    _statusStateFlow.value = LoadingStatus.Success(weatherData)
+                    _statusStateFlow.value = Loading(false)
+                    _statusStateFlow.value = Success(weatherData)
                 }
         }
     }
